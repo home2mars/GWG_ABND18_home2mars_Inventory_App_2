@@ -77,5 +77,13 @@
             tools:text="Quantity"/>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/sale_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="SALE"
+        android:textSize="12sp" />
+
 </LinearLayout>
 
