@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import com.example.android.gwg_abnd18_home2mars_inventory_app_2.data.InventoryContract.InventoryEntry;
@@ -85,6 +86,23 @@ public class InventoryActivity extends AppCompatActivity implements
         // Kick off the loader
         getLoaderManager().initLoader(INVENTORY_LOADER, null, this);
 
+    }
+
+
+    /**
+     * Decrease the product quantity button as user clicks it
+     */
+    public void decreaseQuantity(int inventoryID, int inventoryQuantity) {
+        if (inventoryQuantity <= 0) {
+            Toast.makeText(this, "Sorry, this inventory was sold out.", Toast.LENGTH_SHORT).show();
+        } else {
+            inventoryQuantity = inventoryQuantity - 1;
+            ContentValues values = new ContentValues();
+            values.put(InventoryEntry.COLUMN_INVENTORY_QUANTITY, inventoryQuantity);
+            Uri updateUri = ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, inventoryID);
+            int rowsAffected = getContentResolver().update(updateUri, values, null, null);
+            Toast.makeText(this, "Thank you for your patronage.", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

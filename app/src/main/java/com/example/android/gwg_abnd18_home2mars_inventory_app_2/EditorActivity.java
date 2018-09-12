@@ -1,5 +1,6 @@
 package com.example.android.gwg_abnd18_home2mars_inventory_app_2;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
@@ -7,9 +8,11 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -18,7 +21,9 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.android.gwg_abnd18_home2mars_inventory_app_2.data.InventoryContract.InventoryEntry;
@@ -31,6 +36,9 @@ public class EditorActivity extends AppCompatActivity implements
 
     /** Identifier for the inventory data loader */
     private static final int EXISTING_INVENTORY_LOADER = 0;
+
+    /** Identifier for the call supplier button */
+    private static final int REQUEST_PHONE_CALL = 1;
 
     /** Content URI for the existing inventory (null if it's a new inventory) */
     private Uri mCurrentInventoryUri;
@@ -89,6 +97,7 @@ public class EditorActivity extends AppCompatActivity implements
         mSupplierNameEditText = (EditText) findViewById(R.id.edit_supplier_name);
         mSupplierPhoneEditText = (EditText) findViewById(R.id.edit_supplier_phone);
 
+
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
         // has touched or modified them. This will let us know if there are unsaved changes
         // or not, if the user tries to leave the editor without saving.
@@ -97,7 +106,73 @@ public class EditorActivity extends AppCompatActivity implements
         mQuantityEditText.setOnTouchListener(mTouchListener);
         mSupplierNameEditText.setOnTouchListener(mTouchListener);
         mSupplierPhoneEditText.setOnTouchListener(mTouchListener);
-    }
+
+
+        //Button setOnClickListener to remove quantity
+        ImageButton mMinusButton = (ImageButton) findViewById(R.id.remove_inventory);
+        mMinusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mInventoryHasChanged = true;
+                int currQuantity;
+                String quantityString = mQuantityEditText.getText().toString().trim();
+                try {
+                    currQuantity = Integer.parseInt(quantityString);
+                }
+                catch (Exception e) {
+                    currQuantity = 0;
+                }
+                if (currQuantity <= 0) {
+                    Toast.makeText(getApplicationContext(), "Sorry, can not have lesss than zero inventory.", Toast.LENGTH_SHORT).show();
+                } else {
+                    mQuantityEditText.setText(Integer.toString(currQuantity-1));
+                }
+            }
+        });
+
+        //Button setOnClickListener to add quantity
+        ImageButton mPlusButton = (ImageButton) findViewById(R.id.add_inventory);
+        mPlusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mInventoryHasChanged = true;
+                int currQuantity;
+                String quantityString = mQuantityEditText.getText().toString().trim();
+                try {
+                    currQuantity = Integer.parseInt(quantityString);
+                }
+                catch (Exception e) {
+                    currQuantity = 0;
+                }
+                mQuantityEditText.setText(Integer.toString(currQuantity+1));
+            }
+        });
+
+        //Call supplier
+        Button callButton = findViewById(R.id.call_supplier);
+        callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ActivityCompat.checkSelfPermission(getBaseContext(),
+                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(
+                            EditorActivity.this,
+                            new String[]{Manifest.permission.CALL_PHONE},
+                            REQUEST_PHONE_CALL);
+                    return;
+                }
+
+                String number = mSupplierPhoneEditText.getText().toString().trim();
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:" + number));
+                getApplicationContext().startActivity(callIntent);
+            }
+        });
+
+    } //endof onCreate()
+
+
+
 
     /**
      * OnTouchListener that listens for any user touches on a View, implying that they are modifying

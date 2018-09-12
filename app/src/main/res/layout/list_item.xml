@@ -77,8 +77,13 @@
             tools:text="Quantity"/>
     </LinearLayout>
 
+
+    <!--https://stackoverflow.com/questions/11160639/list-item-with-button-not-clickable-anymore-->
+    <!--android:focusable="false", optional: android:focusableInTouchMode="false"-->
     <Button
         android:id="@+id/sale_button"
+        android:focusable="false"
+		android:focusableInTouchMode="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"

@@ -40,14 +40,41 @@
                 android:id="@+id/edit_inventory_price"
                 android:hint="@string/hint_inventory_price"
                 android:inputType="number"
+                android:drawableStart="@drawable/ic_currency_usd_black_18dp"
                 style="@style/EditorFieldStyle" />
 
             <!-- Quantity field -->
-            <EditText
-                android:id="@+id/edit_inventory_quantity"
-                android:hint="@string/hint_inventory_quantity"
-                android:inputType="number"
-                style="@style/EditorFieldStyle" />
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="2"
+                android:paddingLeft="@dimen/tiny_margin"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/remove_inventory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:clickable="true"
+                    android:src="@drawable/ic_remove_circle" />
+
+                <EditText
+                    android:id="@+id/edit_inventory_quantity"
+                    android:hint="@string/hint_inventory_quantity"
+                    android:inputType="number"
+                    android:gravity="center"
+                    style="@style/EditorFieldStyle" />
+
+                <ImageButton
+                    android:id="@+id/add_inventory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:clickable="true"
+                    android:src="@drawable/ic_add_circle" />
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
@@ -79,12 +106,30 @@
                 style="@style/EditorFieldStyle" />
 
             <!-- Supplier phone field -->
-            <EditText
-                android:id="@+id/edit_supplier_phone"
-                android:hint="@string/hint_supplier_phone"
-                android:inputType="phone"
-                style="@style/EditorFieldStyle" />
-        </LinearLayout>
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="2"
+                android:paddingLeft="@dimen/tiny_margin"
+                android:orientation="horizontal">
 
+                <EditText
+                    android:id="@+id/edit_supplier_phone"
+                    android:hint="@string/hint_supplier_phone"
+                    android:inputType="phone"
+                    android:drawableStart="@drawable/phone_classic"
+                    style="@style/EditorFieldStyle" />
+
+                <Button
+                    android:id="@+id/call_supplier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="CALL"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>
