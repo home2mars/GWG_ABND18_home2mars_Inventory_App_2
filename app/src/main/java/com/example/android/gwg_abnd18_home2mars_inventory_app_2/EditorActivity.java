@@ -208,6 +208,8 @@ public class EditorActivity extends AppCompatActivity implements
                 TextUtils.isEmpty(supplierPhoneString)) {
             // Since no fields were modified, we can return early without creating a new inventory.
             // No need to create ContentValues and no need to do any ContentProvider operations.
+            // Exit activity
+            finish();
             return;
         }
 
@@ -218,6 +220,7 @@ public class EditorActivity extends AppCompatActivity implements
         // Check for null inventory name
         if (TextUtils.isEmpty(nameString)){
             Toast.makeText(this, R.string.null_inventory_name, Toast.LENGTH_SHORT).show();
+            return;
         } else {
             values.put(InventoryEntry.COLUMN_INVENTORY_NAME, nameString);
         }
@@ -225,13 +228,15 @@ public class EditorActivity extends AppCompatActivity implements
         // Check for null supplier name
         if (TextUtils.isEmpty(supplierNameString)){
             Toast.makeText(this, R.string.null_supplier_name, Toast.LENGTH_SHORT).show();
+            return;
         } else {
             values.put(InventoryEntry.COLUMN_SUPPLIER_NAME, supplierNameString);
         }
 
-        // Check for null inventory name
+        // Check for null supplier phone
         if (TextUtils.isEmpty(supplierPhoneString)){
             Toast.makeText(this, R.string.null_supplier_phone, Toast.LENGTH_SHORT).show();
+            return;
         } else {
             values.put(InventoryEntry.COLUMN_SUPPLIER_PHONE, supplierPhoneString);
         }
@@ -268,6 +273,8 @@ public class EditorActivity extends AppCompatActivity implements
                 // Otherwise, the insertion was successful and we can display a toast.
                 Toast.makeText(this, getString(R.string.editor_insert_inventory_successful),
                         Toast.LENGTH_SHORT).show();
+                // Exit activity
+                finish();
             }
         } else {
             // Otherwise this is an EXISTING inventory, so update the inventory with content URI: mCurrentInventoryUri
@@ -285,6 +292,8 @@ public class EditorActivity extends AppCompatActivity implements
                 // Otherwise, the update was successful and we can display a toast.
                 Toast.makeText(this, getString(R.string.editor_update_inventory_successful),
                         Toast.LENGTH_SHORT).show();
+                // Exit activity
+                finish();
             }
         }
     }
@@ -321,8 +330,6 @@ public class EditorActivity extends AppCompatActivity implements
             case R.id.action_save:
                 // Save inventory to database
                 saveInventory();
-                // Exit activity
-                finish();
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
