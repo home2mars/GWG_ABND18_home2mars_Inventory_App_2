@@ -123,7 +123,7 @@ public class EditorActivity extends AppCompatActivity implements
                     currQuantity = 0;
                 }
                 if (currQuantity <= 0) {
-                    Toast.makeText(getApplicationContext(), "Sorry, can not have lesss than zero inventory.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.null_inventory_quantity, Toast.LENGTH_SHORT).show();
                 } else {
                     mQuantityEditText.setText(Integer.toString(currQuantity-1));
                 }
@@ -214,9 +214,27 @@ public class EditorActivity extends AppCompatActivity implements
         // Create a ContentValues object where column names are the keys,
         // and inventory attributes from the editor are the values.
         ContentValues values = new ContentValues();
-        values.put(InventoryEntry.COLUMN_INVENTORY_NAME, nameString);
-        values.put(InventoryEntry.COLUMN_SUPPLIER_NAME, supplierNameString);
-        values.put(InventoryEntry.COLUMN_SUPPLIER_PHONE, supplierPhoneString);
+
+        // Check for null inventory name
+        if (TextUtils.isEmpty(nameString)){
+            Toast.makeText(this, R.string.null_inventory_name, Toast.LENGTH_SHORT).show();
+        } else {
+            values.put(InventoryEntry.COLUMN_INVENTORY_NAME, nameString);
+        }
+
+        // Check for null supplier name
+        if (TextUtils.isEmpty(supplierNameString)){
+            Toast.makeText(this, R.string.null_supplier_name, Toast.LENGTH_SHORT).show();
+        } else {
+            values.put(InventoryEntry.COLUMN_SUPPLIER_NAME, supplierNameString);
+        }
+
+        // Check for null inventory name
+        if (TextUtils.isEmpty(supplierPhoneString)){
+            Toast.makeText(this, R.string.null_supplier_phone, Toast.LENGTH_SHORT).show();
+        } else {
+            values.put(InventoryEntry.COLUMN_SUPPLIER_PHONE, supplierPhoneString);
+        }
 
         // If the price is not provided by the user, don't try to parse the string into an
         // integer value. Use 0 by default.

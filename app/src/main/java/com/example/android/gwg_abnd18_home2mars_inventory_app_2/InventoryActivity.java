@@ -94,14 +94,14 @@ public class InventoryActivity extends AppCompatActivity implements
      */
     public void decreaseQuantity(int inventoryID, int inventoryQuantity) {
         if (inventoryQuantity <= 0) {
-            Toast.makeText(this, "Sorry, this inventory was sold out.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.sold_out_message, Toast.LENGTH_SHORT).show();
         } else {
             inventoryQuantity = inventoryQuantity - 1;
             ContentValues values = new ContentValues();
             values.put(InventoryEntry.COLUMN_INVENTORY_QUANTITY, inventoryQuantity);
             Uri updateUri = ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, inventoryID);
             int rowsAffected = getContentResolver().update(updateUri, values, null, null);
-            Toast.makeText(this, "Thank you for your patronage.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.thank_you_after_sale, Toast.LENGTH_SHORT).show();
         }
     }
 

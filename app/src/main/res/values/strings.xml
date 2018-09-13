@@ -92,4 +92,15 @@
     <!-- Label for quantity field in the main activity [CHAR LIMIT=30] -->
     <string name="inventory_quantity">In stock: </string>
 
+    <!--Text for any null values during saving to the database-->
+    <string name="null_inventory_name">Please supply the inventory\'s name.</string>
+    <string name="null_inventory_quantity">Sorry, can not have lesss than zero inventory.</string>
+    <string name="null_supplier_name">Please supply the supplier\'s name.</string>
+    <string name="null_supplier_phone">Please supply the supplier\'s phone.</string>
+
+    <!--Text for sale process -->
+    <string name="thank_you_after_sale">Thank you for your patronage.</string>
+    <string name="sold_out_message">Sorry, this inventory was sold out.</string>
+
+
 </resources>
