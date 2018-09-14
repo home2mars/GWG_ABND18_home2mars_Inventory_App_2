@@ -57,7 +57,8 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@android:color/transparent"
                     android:clickable="true"
-                    android:src="@drawable/ic_remove_circle" />
+                    android:src="@drawable/ic_remove_circle"
+                    android:contentDescription="Remove Inventory" />
 
                 <EditText
                     android:id="@+id/edit_inventory_quantity"
@@ -72,7 +73,8 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@android:color/transparent"
                     android:clickable="true"
-                    android:src="@drawable/ic_add_circle" />
+                    android:src="@drawable/ic_add_circle"
+                    android:contentDescription="Add Inventory" />
 
             </LinearLayout>
         </LinearLayout>

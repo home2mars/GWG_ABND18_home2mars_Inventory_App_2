@@ -119,7 +119,7 @@ public class EditorActivity extends AppCompatActivity implements
                 try {
                     currQuantity = Integer.parseInt(quantityString);
                 }
-                catch (Exception e) {
+                catch (NumberFormatException e) {
                     currQuantity = 0;
                 }
                 if (currQuantity <= 0) {
@@ -141,7 +141,7 @@ public class EditorActivity extends AppCompatActivity implements
                 try {
                     currQuantity = Integer.parseInt(quantityString);
                 }
-                catch (Exception e) {
+                catch (NumberFormatException e) {
                     currQuantity = 0;
                 }
                 mQuantityEditText.setText(Integer.toString(currQuantity+1));
@@ -165,6 +165,10 @@ public class EditorActivity extends AppCompatActivity implements
                 String number = mSupplierPhoneEditText.getText().toString().trim();
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse("tel:" + number));
+                // Verify that the intent will resolve to an activity
+                if (callIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(callIntent);
+                }
                 getApplicationContext().startActivity(callIntent);
             }
         });
@@ -243,17 +247,27 @@ public class EditorActivity extends AppCompatActivity implements
 
         // If the price is not provided by the user, don't try to parse the string into an
         // integer value. Use 0 by default.
-        int price = 0;
+        int price;
         if (!TextUtils.isEmpty(priceString)) {
-            price = Integer.parseInt(priceString);
+            try {
+                price = Integer.parseInt(priceString);
+            }
+            catch (NumberFormatException e) {
+                price = 0;
+            }
         }
         values.put(InventoryEntry.COLUMN_INVENTORY_PRICE, price);
 
         // If the quantity is not provided by the user, don't try to parse the string into an
         // integer value. Use 0 by default.
-        int quantity = 0;
+        int quantity;
         if (!TextUtils.isEmpty(quantityString)) {
-            quantity = Integer.parseInt(quantityString);
+            try {
+                quantity = Integer.parseInt(quantityString);
+            }
+            catch (NumberFormatException e) {
+                quantity = 0;
+            }
         }
         values.put(InventoryEntry.COLUMN_INVENTORY_QUANTITY, quantity);
 
